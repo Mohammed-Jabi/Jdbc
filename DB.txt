@@ -7,20 +7,8 @@ CREATE TABLE `jdbcclass`.`employees` (
   `salery` INT NULL,
   PRIMARY KEY (`id`));
 
-String url = "jdbc:mysql://localhost:3306/jdbcclass";
-		String username = "root";
-		String password = "jabi@2001";
-		
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			System.out.println("Sucess");
-			DriverManager.getConnection(url,username,password);
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+INSERT INTO `jdbcclass`.`employees` (`id`, `namel`, `email`, `salery`) VALUES ('1001', 'Mohammed Jabir', 'mohammedjabi2001@gmail.com', '750000');
+INSERT INTO `jdbcclass`.`employees` (`id`, `namel`, `email`, `salery`) VALUES ('1002', 'Mohammed M', 'mohammed@gmail.com', '700000');
 
-	}
+ALTER TABLE `jdbcclass`.`employees` 
+CHANGE COLUMN `namel` `name` VARCHAR(150) NULL DEFAULT NULL ;
