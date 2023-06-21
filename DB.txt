@@ -12,3 +12,9 @@ INSERT INTO `jdbcclass`.`employees` (`id`, `namel`, `email`, `salery`) VALUES ('
 
 ALTER TABLE `jdbcclass`.`employees` 
 CHANGE COLUMN `namel` `name` VARCHAR(150) NULL DEFAULT NULL ;
+
+ALTER TABLE `jdbcclass`.`employees` 
+ADD COLUMN `department` VARCHAR(150) NULL AFTER `salery`;
+
+UPDATE `jdbcclass`.`employees` SET `department` = 'IT' WHERE (`id` = '1001');
+UPDATE `jdbcclass`.`employees` SET `department` = 'Finance' WHERE (`id` = '1002');

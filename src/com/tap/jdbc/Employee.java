@@ -18,9 +18,9 @@ public class Employee {
 		FileInputStream fis = null;
 		Properties p = null;
 		
-		String url = "jdbc:mysql://localhost:3306/jdbcclass";
-		String username = "root";
-		String password = "jabi@2001";
+//		String url = "jdbc:mysql://localhost:3306/jdbcclass";
+//		String username = "root";
+//		String password = "jabi@2001";
 
 		Statement myStmt=null;
 		ResultSet res =null;
@@ -29,15 +29,18 @@ public class Employee {
 		try {
 			//
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			//
-			//To hide the credntials
-			mycon = DriverManager.getConnection(url,username,password);
+			
+			
 			fis = new FileInputStream("C:\\Users\\moham\\eclipse-workspace\\Jdbc\\src\\com\\tap\\utility\\mySqlInfo.properties");
 			p = new Properties();
 			p.load(fis);
-			p.getProperty(url);
-			p.getProperty(username);
-			p.getProperty(password);
+			
+			String url = p.getProperty("url");
+			String username = p.getProperty("username");
+			String password = p.getProperty("password");
+			//
+			//To hide the credntials
+			mycon = DriverManager.getConnection(url,username,password);
 			//
 			myStmt= mycon.createStatement();
 			//
@@ -68,7 +71,9 @@ public class Employee {
 		res = myStmt.executeQuery("Select * from employees");
 
 		while(res.next()) {
-			System.out.println(res.getInt("id")+" "+res.getString("name")+" "+res.getString("email")+" "+res.getInt("salery")); 
+			//System.out.println(res.getInt("id")+" "+res.getString("name")+" "+res.getString("email")+" "+res.getInt("salery")+" "+res.getString("department")); 
+		
+		System.out.printf("%-2d %-15s %-27s %-7d %-1s \n",res.getInt("id"),res.getString("name"),res.getString("email"),res.getInt("salery"),res.getString("department"));
 		}
 	}
 	
