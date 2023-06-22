@@ -5,26 +5,26 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
+import java.util.Scanner;
 
-public class Program {
+public class IncompleteQuery {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException {
 
 		FileInputStream fis = null;
 		Properties p = null;
 		Connection myCon = null;
 		Statement myStmt=null;
 		ResultSet res =null;
+		Scanner scan = new Scanner(System.in);
 
 
-		String sql = "INSERT into `employees`(`id`,`name`,`email`,`salery`,`department`) values(1004,'Taniya', 'taniya.com', 70000, 'IT')  ";
-		String sql1 = "INSERT into `employees`(`id`,`name`,`email`,`salery`,`department`) values(1005,'Arun', 'arun.com', 70000, 'IT')  ";
-		String sql2 = "INSERT into `employees`(`id`,`name`,`email`,`salery`,`department`) values(1006,'Kavya', 'kavya.com', 70000, 'IT')  ";
-
+		String sql = "INSERT into `employees`(`id`,`name`,`email`,`salery`,`department`) values(?,?,?,?,? ) ";
 
 		try {
 
@@ -40,14 +40,17 @@ public class Program {
 
 			myCon = DriverManager.getConnection(url,username,password);
 
-			myStmt = myCon.createStatement();
-
-			myStmt.addBatch(sql);
-			myStmt.addBatch(sql1);
-			myStmt.addBatch(sql2);
+			myStmt = myCon.createStatement(); 
 			
-			myStmt.executeBatch();
+			PreparedStatement myPrepStmt = myCon.prepareStatement(sql);
+			
+			myPrepStmt.setInt(1, scan.nextInt());
+			myPrepStmt.setString(2,scan.next());
+			myPrepStmt.setString(3,scan.next());
+			myPrepStmt.setInt(4,scan.nextInt());
+			myPrepStmt.setString(5,scan.next());
 
+			myPrepStmt.executeUpdate();
 
 			Employee.display(myStmt, res);
 
@@ -73,7 +76,6 @@ public class Program {
 
 
 	}
-	
 
 	private static void close(ResultSet res, Statement myStmt, Connection myCon, Properties p, FileInputStream fis) {
 		try {
@@ -97,10 +99,10 @@ public class Program {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-	}
+
+
+	}	
 
 }
-
-
 
 
