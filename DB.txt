@@ -19,54 +19,15 @@ ADD COLUMN `department` VARCHAR(150) NULL AFTER `salery`;
 UPDATE `jdbcclass`.`employees` SET `department` = 'IT' WHERE (`id` = '1001');
 UPDATE `jdbcclass`.`employees` SET `department` = 'Finance' WHERE (`id` = '1002');
 
-	public static void main(String[] args) {
 
-		
-		FileInputStream fis = null;
-		Properties p = null;
-		
+USE `jdbcclass`;
+DROP procedure IF EXISTS `countemp`;
 
+DELIMITER $$
+USE `jdbcclass`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `countemp`(IN dept varchar(20), OUT noemp INT)
+BEGIN
+    SELECT COUNT(*) INTO noemp FROM employees WHERE department = dept;
+END$$
 
-		Statement myStmt=null;
-		ResultSet res =null;
-		Connection mycon =null;
-
-		try {
-			//
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			
-			
-			fis = new FileInputStream("C:\\Users\\moham\\eclipse-workspace\\Jdbc\\src\\com\\tap\\utility\\mySqlInfo.properties");
-			p = new Properties();
-			p.load(fis);
-			
-			String url = p.getProperty("url");
-			String username = p.getProperty("username");
-			String password = p.getProperty("password");
-			//
-			//To hide the credntials
-			mycon = DriverManager.getConnection(url,username,password);
-			//
-			myStmt= mycon.createStatement();
-			//
-			display(myStmt,res);
-
-
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		finally {
-			close(myStmt, res, mycon);
-		}
-
-
-	}
+DELIMITER ;
