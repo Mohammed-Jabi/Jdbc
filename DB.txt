@@ -31,3 +31,8 @@ BEGIN
 END$$
 
 DELIMITER ;
+
+
+ALTER TABLE `jdbcclass`.`employees` 
+ADD COLUMN `image` LONGBLOB NULL AFTER `department`,
+ADD COLUMN `profile` LONGTEXT NULL AFTER `image`;
