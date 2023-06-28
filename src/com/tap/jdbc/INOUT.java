@@ -3,15 +3,19 @@ package com.tap.jdbc;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 import java.util.Properties;
+import java.util.Scanner;
 
-public class Clob {
+public class INOUT {
+	
+	static final Scanner scan = new Scanner(System.in);
 
 	public static void main(String[] args) throws SQLException {
 
@@ -22,7 +26,6 @@ public class Clob {
 		ResultSet res = null;
 
 		String sql = "";
-		String myFilePath = "C:\\Users\\moham\\eclipse-workspace\\Jdbc\\src\\com\\tap\\utility\\About.txt";
 
 		try {
 
@@ -39,15 +42,18 @@ public class Clob {
 
 			myCon = DriverManager.getConnection(url, username, password);
 
-			PreparedStatement pstmt = myCon.prepareStatement(sql);
+			CallableStatement call = myCon.prepareCall("{call countsalaryemp(?	)}");
 			
-			FileInputStream reader = new FileInputStream(myFilePath);
 			
-			pstmt.setBinaryStream(1, reader);
+			int salary = scan.nextInt();
+			call.setInt(1, salary);
 			
-			int i = pstmt.executeUpdate();
-			System.out.println(i);
+			call.registerOutParameter(1, Types.INTEGER);
+			call.execute();
 			
+			int count = call.getInt(1);
+			System.out.println(count);
+
 		}
 
 		catch (ClassNotFoundException e) {
@@ -87,6 +93,6 @@ public class Clob {
 			e.printStackTrace();
 		}
 
-	}
+	}	
 	
 }
