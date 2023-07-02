@@ -22,7 +22,7 @@ public static void main(String[] args) throws SQLException {
 	Statement myStmt = null;
 	ResultSet res = null;
 
-	String sql = "";
+	String sql = "UPDATE employees SET image=? WHERE id=1001 ";
 	String imagePath = "C:\\Users\\moham\\eclipse-workspace\\Jdbc\\src\\com\\tap\\utility\\Images\\WhatsApp Image 2023-03-29 at 22.16.04.jpeg";
 
 	try {

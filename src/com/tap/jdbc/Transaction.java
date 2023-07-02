@@ -12,7 +12,7 @@ import java.sql.Statement;
 import java.util.Properties;
 import java.util.Scanner;
 
-public class Program {
+public class Transaction {
 	static	Scanner scan = new Scanner(System.in);
 
 	public static void main(String[] args) throws SQLException {

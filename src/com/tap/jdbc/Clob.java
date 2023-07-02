@@ -21,7 +21,7 @@ public class Clob {
 		Statement myStmt = null;
 		ResultSet res = null;
 
-		String sql = "";
+		String sql = "UPDATE employees SET profile=? WHERE id=1002";
 		String myFilePath = "C:\\Users\\moham\\eclipse-workspace\\Jdbc\\src\\com\\tap\\utility\\About.txt";
 
 		try {
